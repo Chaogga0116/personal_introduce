@@ -16,6 +16,7 @@
         <div class="hero-actions">
           <a href="#contact" class="btn btn-primary">聯絡我</a>
           <a href="#projects" class="btn btn-outline">查看作品</a>
+          <a :href="profile.github" target="_blank" rel="noopener noreferrer" class="btn btn-outline">GitHub</a>
         </div>
       </div>
     </div>

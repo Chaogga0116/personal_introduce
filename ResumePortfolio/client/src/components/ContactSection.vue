@@ -33,6 +33,14 @@
                 <p>{{ profile.location }}</p>
               </div>
             </div>
+
+            <a :href="profile.github" target="_blank" rel="noopener noreferrer" class="contact-method card card-glass">
+              <div class="contact-icon">💻</div>
+              <div class="contact-details">
+                <h4>GitHub</h4>
+                <p>github.com/Chaogga0116</p>
+              </div>
+            </a>
           </div>
 
         </div>

@@ -5,6 +5,7 @@ export const profileData = {
   email: "a0963181933@gmail.com",
   phone: "0963181933",
   location: "台中, 台灣",
+  github: "https://github.com/Chaogga0116",
   bio: "擁有 4-5 年全端開發經驗的軟體工程師，專精於 ASP.NET、C# 後端架構與 Vue.js、React 前端技術。具備完整的系統開發能力，從需求分析、架構設計到部署維運皆能獨立完成。曾參與大型企業級專案開發，熟悉 ERP 系統、電商平台及數據處理系統的建置與優化。注重程式碼品質與系統效能，善於運用現代化技術解決複雜的業務需求。",
   skills: [
     { category: "程式語言", items: ["ASP.NET", "C#", "Java", "JavaScript"] },

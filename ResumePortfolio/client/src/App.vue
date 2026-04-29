@@ -10,9 +10,12 @@
       <ContactSection :profile="profileData" />
     </main>
     
-    <FooterBar 
+    <ScrollToTop />
+
+    <FooterBar
       :name="profileData.name"
       :tagline="profileData.bio"
+      :github-url="profileData.github"
     />
   </div>
 </template>
@@ -25,6 +28,7 @@ import AboutSection from './components/AboutSection.vue';
 import ExperienceSection from './components/ExperienceSection.vue';
 import ProjectsSection from './components/ProjectsSection.vue';
 import ContactSection from './components/ContactSection.vue';
+import ScrollToTop from './components/ScrollToTop.vue';
 import { profileData, experienceData, projectsData } from './data/mockData.js';
 
 export default {
@@ -36,7 +40,8 @@ export default {
     AboutSection,
     ExperienceSection,
     ProjectsSection,
-    ContactSection
+    ContactSection,
+    ScrollToTop
   },
   data() {
     return {

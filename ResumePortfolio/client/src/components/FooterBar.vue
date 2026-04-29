@@ -17,6 +17,13 @@
           </ul>
         </div>
 
+        <div class="footer-section">
+          <h4 class="footer-subtitle">社群連結</h4>
+          <div class="social-links">
+            <a :href="githubUrl" target="_blank" rel="noopener noreferrer" class="social-link">GitHub</a>
+          </div>
+        </div>
+
       </div>
       
       <div class="footer-bottom">
@@ -38,13 +45,9 @@ export default {
       type: String,
       default: '熱愛技術創新的全端工程師'
     },
-    socialLinks: {
-      type: Array,
-      default: () => [
-        { name: 'GitHub', url: 'https://github.com' },
-        { name: 'LinkedIn', url: 'https://linkedin.com' },
-        { name: 'Email', url: 'mailto:example@email.com' }
-      ]
+    githubUrl: {
+      type: String,
+      default: 'https://github.com/Chaogga0116'
     }
   },
   computed: {
