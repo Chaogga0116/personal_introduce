@@ -6,11 +6,12 @@ export const profileData = {
   phone: "0963181933",
   location: "台中, 台灣",
   github: "https://github.com/Chaogga0116",
-  bio: "擁有 4-5 年全端開發經驗的軟體工程師，專精於 ASP.NET、C# 後端架構與 Vue.js、React 前端技術。具備完整的系統開發能力，從需求分析、架構設計到部署維運皆能獨立完成。曾參與大型企業級專案開發，熟悉 ERP 系統、電商平台及數據處理系統的建置與優化。注重程式碼品質與系統效能，善於運用現代化技術解決複雜的業務需求。",
+  bio: "擁有 6 年以上全端開發經驗的軟體工程師，後端專精 ASP.NET、C# 與 Python FastAPI，前端熟悉 Vue 3、React。近年投入 AI 應用開發，自建 LLM Agent 平台，實作向量記憶檢索、多模型路由與自動化驗證流程，並在日常開發導入 Cursor、Copilot、Claude Code 提升產出效率。具備從需求分析、架構設計到部署維運的完整開發能力，曾參與體育直播服務、政府 ERP 與半導體廠區 E 化等大型專案，注重程式碼品質與系統效能。",
   skills: [
-    { category: "程式語言", items: ["ASP.NET", "C#", "Java", "JavaScript"] },
-    { category: "後端架構", items: ["MVC", "MVVM", ".NET Framework"] },
+    { category: "程式語言", items: ["C#", "ASP.NET", "Python", "Java", "JavaScript"] },
+    { category: "後端架構", items: ["MVC", "MVVM", ".NET Framework", "FastAPI", "Entity Framework"] },
     { category: "前端框架", items: ["Vue3", "React", "KnockOut"] },
+    { category: "AI 應用", items: ["LLM 應用開發", "AI Agent 編排", "RAG／向量檢索", "Prompt 工程", "Claude Code", "Cursor", "Copilot"] },
     { category: "資料庫", items: ["MSSQL", "Redis", "MySQL", "MongoDB", "Access", "Firebase"] },
     { category: "開發工具", items: ["Cursor", "Claude", "Rider", "Visual Studio", "Git", "Docker", "GCP", "AWS", "K8S"] },
     { category: "其他技術", items: ["Unity3D", "Android", "ERP 系統", "中/英文打字 75-100"] }
@@ -28,8 +29,9 @@ export const experienceData = [
     description: "負責體育直播軟體服務系統的全端開發與維護",
     achievements: [
       "運用 Vue 3 前端框架結合後端 MVVM 架構製作軟體，導入 EF 連接資料庫",
-      "使用 MSSQL、Redis、FireBase 來處理資料，經常處理高併發資料的讀寫",
-      "也會運用 GCP 以及 Sentry 時刻關注產品穩定性，提在意使用 Cursor、Copilot 來開發"
+      "使用 MSSQL、Redis、FireBase 處理資料，經常面對高併發情境下的資料讀寫與快取設計",
+      "以 GCP 部署服務、串接 Sentry 建立錯誤追蹤與告警，持續監控產品穩定性",
+      "導入 Cursor、Copilot、Claude Code 等 AI 工具進行程式生成、重構與程式碼審查，縮短開發與除錯時間"
     ]
   },
   {
@@ -61,6 +63,22 @@ export const experienceData = [
 ];
 
 export const projectsData = [
+  {
+    id: 5,
+    name: "brain_ai 自架 AI 助理／開發管家平台",
+    category: "AI 應用",
+    period: "2026/06 - 現在",
+    description: "以 LLM 為核心的個人 AI 助理平台，具備長期記憶、背景任務編排與自動驗證迴圈，後端 FastAPI、前端 Vue 3，以 Docker Compose 容器化長期運行",
+    technologies: ["Python", "FastAPI", "Vue 3", "Vite", "SQLite", "Docker Compose", "LLM", "RAG", "OpenTelemetry"],
+    highlights: [
+      "多模型供應商路由與語意意圖分類，依任務型態自動分派模型並在失敗時降級",
+      "SQLite 搭配本地向量模型做長期記憶召回，向量失效時自動降級為全文關鍵字檢索",
+      "自研任務管線引擎，長任務拆為可中斷續跑的步驟，含自動驗證與修正迴圈",
+      "181 組 pytest 測試、ruff 靜態檢查與自建提交閘門，未通過驗證不得結案",
+      "Argon2id 密碼雜湊、Fernet 機密加密、指令與路徑白名單、日誌敏感資訊遮罩"
+    ],
+    image: null
+  },
   {
     id: 1,
     name: "體育直播軟體服務系統",
