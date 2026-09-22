@@ -1,156 +1,165 @@
 <template>
-  <section id="projects" class="section">
-    <div class="container">
-      <h2 class="section-title">專案作品</h2>
-      
-      <div class="projects-grid">
-        <div v-for="(project, index) in projects" 
-             :key="project.id"
-             class="project-card card animate-fade-in-up"
-             :style="{ animationDelay: `${index * 0.1}s` }">
-          <div class="project-header">
-            <div>
-              <span class="project-category badge">{{ project.category }}</span>
-              <h3 class="project-name">{{ project.name }}</h3>
-              <p class="project-period">{{ project.period }}</p>
-            </div>
-          </div>
-          
-          <p class="project-description">{{ project.description }}</p>
-          
-          <div class="project-tech">
-            <span v-for="tech in project.technologies" 
-                  :key="tech"
-                  class="tech-badge badge badge-primary">
-              {{ tech }}
-            </span>
-          </div>
-          
-          <div class="project-highlights">
-            <h5>專案亮點：</h5>
-            <ul>
-              <li v-for="(highlight, idx) in project.highlights" :key="idx">
-                {{ highlight }}
-              </li>
-            </ul>
+  <section class="sec" id="works">
+    <div class="sec-label">04 ／ Selected Works</div>
+    <h2 class="sec-title">專案作品</h2>
+
+    <div class="works">
+      <article
+        class="work"
+        :class="{ 'is-lead': project.lead }"
+        v-for="project in projects"
+        :key="project.id"
+      >
+        <div class="work-head">
+          <span class="work-year">{{ project.period }}</span>
+          <h3 class="work-name">{{ project.name }}</h3>
+          <span class="work-kind">{{ project.category }}</span>
+        </div>
+        <p class="work-desc">{{ project.description }}</p>
+        <div class="work-body">
+          <ul class="work-list">
+            <li v-for="(item, i) in project.highlights" :key="i">{{ item }}</li>
+          </ul>
+          <div class="work-tech">
+            <span v-for="tech in project.technologies" :key="tech">{{ tech }}</span>
           </div>
         </div>
-      </div>
+      </article>
     </div>
   </section>
 </template>
 
-<script>
-export default {
-  name: 'ProjectsSection',
-  props: {
-    projects: {
-      type: Array,
-      required: true
-    }
-  }
-};
+<script setup>
+defineProps({
+  projects: { type: Array, default: () => [] }
+});
 </script>
 
 <style scoped>
-.projects-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-  gap: var(--space-xl);
-}
-
-.project-card {
+.works {
   display: flex;
   flex-direction: column;
-  gap: var(--space-md);
-  padding: var(--space-xl);
-  opacity: 0;
-  animation: fadeInUp 0.6s ease-out forwards;
-  transition: all var(--transition-base);
 }
 
-.project-card:hover {
-  transform: translateY(-8px);
-  box-shadow: var(--shadow-xl);
+.work {
+  padding: 24px;
+  border: 1px solid var(--line-soft);
+  border-left: 2px solid var(--line);
+  background: color-mix(in srgb, var(--surface) 55%, transparent);
+  margin-bottom: 14px;
+  transition: border-color .3s var(--ease), background .3s var(--ease);
 }
 
-.project-header {
+.work:hover {
+  border-left-color: var(--accent);
+  background: color-mix(in srgb, var(--surface) 85%, transparent);
+}
+
+/* 主打專案：左側直接標記重點色 */
+.work.is-lead {
+  border-left-color: var(--accent);
+}
+
+.work-head {
   display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-}
-
-.project-category {
-  display: inline-block;
-  margin-bottom: var(--space-sm);
-}
-
-.project-name {
-  font-size: var(--font-size-xl);
-  font-weight: 700;
-  color: var(--color-text-primary);
-  margin-bottom: var(--space-xs);
-}
-
-.project-period {
-  font-size: var(--font-size-sm);
-  color: var(--color-text-tertiary);
-}
-
-.project-description {
-  color: var(--color-text-secondary);
-  line-height: 1.7;
-  flex-grow: 1;
-}
-
-.project-tech {
-  display: flex;
-  gap: var(--space-xs);
   flex-wrap: wrap;
+  align-items: baseline;
+  gap: 8px 16px;
 }
 
-.tech-badge {
-  font-size: var(--font-size-xs);
+.work-year {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: .04em;
+  color: var(--ink-3);
+  font-variant-numeric: tabular-nums;
+  min-width: 92px;
 }
 
-.project-highlights {
-  margin-top: var(--space-sm);
-}
-
-.project-highlights h5 {
-  font-size: var(--font-size-sm);
+.work-name {
+  font-family: var(--mono);
+  font-size: 16px;
   font-weight: 600;
-  color: var(--color-text-primary);
-  margin-bottom: var(--space-sm);
+  letter-spacing: .02em;
+  margin: 0;
+  flex: 1 1 240px;
 }
 
-.project-highlights ul {
-  list-style: none;
+.work-kind {
+  font-family: var(--mono);
+  font-size: 9.5px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--accent);
+  border: 1px solid var(--line);
+  padding: 2px 8px;
+  border-radius: var(--radius);
+}
+
+.work-desc {
+  margin: 12px 0 0;
+  font-size: 13.8px;
+  color: var(--ink-2);
+  max-width: 64ch;
+}
+
+.work-body {
+  margin-top: 14px;
+  display: grid;
+  gap: 16px;
+}
+
+@media (min-width: 880px) {
+  .work-body {
+    grid-template-columns: 1.3fr 1fr;
+    gap: 36px;
+  }
+}
+
+.work-list {
+  margin: 0;
   padding: 0;
+  list-style: none;
   display: flex;
   flex-direction: column;
-  gap: var(--space-xs);
+  gap: 8px;
 }
 
-.project-highlights li {
+.work-list li {
   position: relative;
-  padding-left: var(--space-md);
-  color: var(--color-text-secondary);
-  font-size: var(--font-size-sm);
-  line-height: 1.5;
+  padding-left: 18px;
+  font-size: 13.2px;
+  line-height: 1.8;
+  color: var(--ink-2);
 }
 
-.project-highlights li::before {
-  content: '▸';
+.work-list li::before {
+  content: "";
   position: absolute;
   left: 0;
-  color: var(--color-primary-light);
-  font-weight: bold;
+  top: .68em;
+  width: 5px;
+  height: 5px;
+  background: var(--accent);
+  opacity: .7;
 }
 
-@media (max-width: 768px) {
-  .projects-grid {
-    grid-template-columns: 1fr;
-  }
+.work-tech {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  align-content: flex-start;
+}
+
+.work-tech span {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: .04em;
+  color: var(--ink-3);
+  border: 1px solid var(--line-soft);
+  background: var(--surface-2);
+  padding: 3px 8px;
+  border-radius: var(--radius);
+  white-space: nowrap;
 }
 </style>

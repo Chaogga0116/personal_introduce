@@ -1,164 +1,78 @@
 <template>
-  <section id="about" class="section">
-    <div class="container">
-      <h2 class="section-title">關於我</h2>
-      
-      <div class="about-grid">
-        <div class="about-info card card-glass animate-fade-in-up">
-          <h3>個人資訊</h3>
-          <div class="info-list">
-            <div class="info-item">
-              <span class="info-label">📧 Email:</span>
-              <span class="info-value">{{ profile.email }}</span>
-            </div>
-            <div class="info-item">
-              <span class="info-label">📱 電話:</span>
-              <span class="info-value">{{ profile.phone }}</span>
-            </div>
-            <div class="info-item">
-              <span class="info-label">📍 地點:</span>
-              <span class="info-value">{{ profile.location }}</span>
-            </div>
-          </div>
-          
-          <div class="social-links">
-            <a v-for="(url, platform) in profile.social" 
-               :key="platform"
-               :href="url"
-               class="social-btn"
-               target="_blank"
-               rel="noopener noreferrer">
-              {{ platform.toUpperCase() }}
-            </a>
-          </div>
-        </div>
-        
-        <div class="skills-section">
-          <div v-for="skillGroup in profile.skills" 
-               :key="skillGroup.category"
-               class="skill-group card animate-fade-in-up">
-            <h4 class="skill-category">{{ skillGroup.category }}</h4>
-            <div class="skill-tags">
-              <span v-for="skill in skillGroup.items" 
-                    :key="skill"
-                    class="badge badge-primary">
-                {{ skill }}
-              </span>
-            </div>
-          </div>
+  <section class="sec" id="skills">
+    <div class="sec-label">02 ／ Technical Stack</div>
+    <h2 class="sec-title">技術能力</h2>
+
+    <div class="skills">
+      <div
+        class="skill-row"
+        :class="{ 'is-lead': group.lead }"
+        v-for="group in profile.skills"
+        :key="group.category"
+      >
+        <div class="skill-cat">{{ group.category }}</div>
+        <div class="chips">
+          <span class="chip" v-for="item in group.items" :key="item">{{ item }}</span>
         </div>
       </div>
     </div>
   </section>
 </template>
 
-<script>
-export default {
-  name: 'AboutSection',
-  props: {
-    profile: {
-      type: Object,
-      required: true
-    }
-  }
-};
+<script setup>
+defineProps({
+  profile: { type: Object, required: true }
+});
 </script>
 
 <style scoped>
-.about-grid {
+.skills {
   display: grid;
-  grid-template-columns: 1fr 2fr;
-  gap: var(--space-xl);
+  border-top: 1px solid var(--line-soft);
 }
 
-.about-info {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-lg);
-  height: fit-content;
-  position: sticky;
-  top: 100px;
-}
-
-.about-info h3 {
-  font-size: var(--font-size-2xl);
-  font-weight: 700;
-  margin-bottom: var(--space-sm);
-}
-
-.info-list {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-md);
-}
-
-.info-item {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-xs);
-}
-
-.info-label {
-  font-size: var(--font-size-sm);
-  color: var(--color-text-tertiary);
-  font-weight: 500;
-}
-
-.info-value {
-  font-size: var(--font-size-base);
-  color: var(--color-text-primary);
-}
-
-.social-links {
-  display: flex;
-  gap: var(--space-sm);
-  flex-wrap: wrap;
-}
-
-.social-btn {
-  padding: var(--space-sm) var(--space-md);
-  background: var(--gradient-primary);
-  color: white;
-  border-radius: var(--radius-lg);
-  font-size: var(--font-size-sm);
-  font-weight: 600;
-  transition: all var(--transition-base);
-}
-
-.social-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-lg);
-}
-
-.skills-section {
+.skill-row {
   display: grid;
-  gap: var(--space-lg);
+  grid-template-columns: 1fr;
+  gap: 8px;
+  padding: 18px 0;
+  border-bottom: 1px solid var(--line-soft);
 }
 
-.skill-group {
-  padding: var(--space-lg);
+@media (min-width: 640px) {
+  .skill-row {
+    grid-template-columns: 152px 1fr;
+    gap: 24px;
+    align-items: baseline;
+  }
 }
 
-.skill-category {
-  font-size: var(--font-size-xl);
-  font-weight: 700;
-  margin-bottom: var(--space-md);
-  color: var(--color-primary-light);
+.skill-cat {
+  font-family: var(--mono);
+  font-size: 10.5px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--ink-3);
 }
 
-.skill-tags {
+/* AI 應用為主打能力，整列淡染重點色 */
+.skill-row.is-lead {
+  background: linear-gradient(to right, var(--accent-soft), transparent 60%);
+}
+
+.skill-row.is-lead .skill-cat {
+  color: var(--accent);
+}
+
+.chips {
   display: flex;
-  gap: var(--space-sm);
   flex-wrap: wrap;
+  gap: 6px;
 }
 
-@media (max-width: 768px) {
-  .about-grid {
-    grid-template-columns: 1fr;
-  }
-  
-  .about-info {
-    position: static;
-  }
+.skill-row.is-lead :deep(.chip) {
+  border-color: color-mix(in srgb, var(--accent) 42%, var(--line));
+  color: var(--accent);
+  background: var(--accent-soft);
 }
 </style>

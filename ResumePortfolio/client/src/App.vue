@@ -1,22 +1,24 @@
 <template>
   <div id="app">
-    <NavBar :name="profileData.name" />
-    
-    <main>
-      <HeroSection :profile="profileData" />
-      <AboutSection :profile="profileData" />
-      <ExperienceSection :experiences="experienceData" />
-      <ProjectsSection :projects="projectsData" />
-      <ContactSection :profile="profileData" />
-    </main>
-    
-    <ScrollToTop />
+    <div class="shell">
+      <NavBar
+        :name="profileData.name"
+        :name-en="profileData.nameEn"
+        :status="profileData.status"
+      />
 
-    <FooterBar
-      :name="profileData.name"
-      :tagline="profileData.bio"
-      :github-url="profileData.github"
-    />
+      <main>
+        <HeroSection :profile="profileData" />
+        <AboutSection :profile="profileData" />
+        <ExperienceSection :experiences="experienceData" />
+        <ProjectsSection :projects="projectsData" />
+        <CertsSection :certifications="educationData" />
+        <ContactSection :profile="profileData" />
+        <FooterBar :name="profileData.name" />
+      </main>
+    </div>
+
+    <ScrollToTop />
   </div>
 </template>
 
@@ -27,9 +29,10 @@ import HeroSection from './components/HeroSection.vue';
 import AboutSection from './components/AboutSection.vue';
 import ExperienceSection from './components/ExperienceSection.vue';
 import ProjectsSection from './components/ProjectsSection.vue';
+import CertsSection from './components/CertsSection.vue';
 import ContactSection from './components/ContactSection.vue';
 import ScrollToTop from './components/ScrollToTop.vue';
-import { profileData, experienceData, projectsData } from './data/mockData.js';
+import { profileData, experienceData, projectsData, educationData } from './data/mockData.js';
 
 export default {
   name: 'App',
@@ -40,6 +43,7 @@ export default {
     AboutSection,
     ExperienceSection,
     ProjectsSection,
+    CertsSection,
     ContactSection,
     ScrollToTop
   },
@@ -47,21 +51,15 @@ export default {
     return {
       profileData,
       experienceData,
-      projectsData
+      projectsData,
+      educationData
     };
-  },
-
+  }
 };
 </script>
 
 <style>
 #app {
   min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-}
-
-main {
-  flex: 1;
 }
 </style>

@@ -1,148 +1,86 @@
 <template>
-  <section id="contact" class="section contact-section">
-    <div class="container">
-      <h2 class="section-title">聯絡方式</h2>
-      
-      <div class="contact-content">
-        <div class="contact-info animate-fade-in-up">
-          <p class="contact-intro">
-            如果您對我的經歷或專案感興趣，歡迎透過以下方式與我聯繫。我很樂意討論合作機會或技術交流！
-          </p>
-          
-          <div class="contact-methods">
-            <a :href="`mailto:${profile.email}`" class="contact-method card card-glass">
-              <div class="contact-icon">📧</div>
-              <div class="contact-details">
-                <h4>Email</h4>
-                <p>{{ profile.email }}</p>
-              </div>
-            </a>
-            
-            <a :href="`tel:${profile.phone}`" class="contact-method card card-glass">
-              <div class="contact-icon">📱</div>
-              <div class="contact-details">
-                <h4>電話</h4>
-                <p>{{ profile.phone }}</p>
-              </div>
-            </a>
-            
-            <div class="contact-method card card-glass">
-              <div class="contact-icon">📍</div>
-              <div class="contact-details">
-                <h4>地點</h4>
-                <p>{{ profile.location }}</p>
-              </div>
-            </div>
+  <section class="sec" id="contact">
+    <div class="sec-label">06 ／ Contact</div>
+    <h2 class="sec-title">聯絡方式</h2>
 
-            <a :href="profile.github" target="_blank" rel="noopener noreferrer" class="contact-method card card-glass">
-              <div class="contact-icon">💻</div>
-              <div class="contact-details">
-                <h4>GitHub</h4>
-                <p>github.com/Chaogga0116</p>
-              </div>
-            </a>
-          </div>
-
-        </div>
+    <dl class="contact-grid">
+      <div class="contact-row">
+        <dt>Email</dt>
+        <dd><a :href="`mailto:${profile.email}`">{{ profile.email }}</a></dd>
       </div>
-    </div>
+      <div class="contact-row">
+        <dt>GitHub</dt>
+        <dd>
+          <a :href="profile.github" target="_blank" rel="noopener">{{ githubLabel }}</a>
+        </dd>
+      </div>
+      <div class="contact-row">
+        <dt>所在地</dt>
+        <dd>{{ profile.location }}</dd>
+      </div>
+      <div class="contact-row">
+        <dt>狀態</dt>
+        <dd>在職中 ・ {{ profile.status }}</dd>
+      </div>
+    </dl>
   </section>
 </template>
 
-<script>
-export default {
-  name: 'ContactSection',
-  props: {
-    profile: {
-      type: Object,
-      required: true
-    }
-  }
-};
+<script setup>
+import { computed } from 'vue';
+
+const props = defineProps({
+  profile: { type: Object, required: true }
+});
+
+// 網址去掉通訊協定，只留可辨識的部分
+const githubLabel = computed(() => (props.profile.github || '').replace(/^https?:\/\//, ''));
 </script>
 
 <style scoped>
-.contact-section {
-  background: var(--color-bg-secondary);
-  border-radius: var(--radius-2xl);
-  margin: var(--space-2xl) 0;
-}
-
-.contact-content {
-  max-width: 800px;
-  margin: 0 auto;
-}
-
-.contact-intro {
-  font-size: var(--font-size-lg);
-  color: var(--color-text-secondary);
-  text-align: center;
-  margin-bottom: var(--space-2xl);
-  line-height: 1.8;
-}
-
-.contact-methods {
+.contact-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: var(--space-lg);
-  margin-bottom: var(--space-2xl);
+  border: 1px solid var(--line);
+  max-width: 600px;
+  background: color-mix(in srgb, var(--surface) 60%, transparent);
 }
 
-.contact-method {
+.contact-row {
   display: flex;
-  align-items: center;
-  gap: var(--space-md);
-  padding: var(--space-lg);
-  text-decoration: none;
-  transition: all var(--transition-base);
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 14px 18px;
+  border-bottom: 1px solid var(--line-soft);
 }
 
-.contact-method:hover {
-  transform: translateY(-4px);
-  box-shadow: var(--shadow-lg);
+.contact-row:last-child {
+  border-bottom: 0;
 }
 
-.contact-icon {
-  font-size: var(--font-size-4xl);
-  flex-shrink: 0;
+.contact-row dt {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--ink-3);
 }
 
-.contact-details h4 {
-  font-size: var(--font-size-base);
-  font-weight: 600;
-  color: var(--color-text-primary);
-  margin-bottom: var(--space-xs);
-}
-
-.contact-details p {
-  font-size: var(--font-size-sm);
-  color: var(--color-text-secondary);
+.contact-row dd {
   margin: 0;
+  font-family: var(--mono);
+  font-size: 13.5px;
+  font-variant-numeric: tabular-nums;
+  text-align: right;
 }
 
-.social-cta {
-  text-align: center;
-  padding-top: var(--space-xl);
-  border-top: 1px solid var(--color-border);
+.contact-row a {
+  border-bottom: 1px solid transparent;
+  transition: color .25s var(--ease), border-color .25s var(--ease);
 }
 
-.social-cta h3 {
-  font-size: var(--font-size-xl);
-  font-weight: 600;
-  margin-bottom: var(--space-lg);
-  color: var(--color-text-primary);
-}
-
-.social-buttons {
-  display: flex;
-  gap: var(--space-md);
-  justify-content: center;
-  flex-wrap: wrap;
-}
-
-@media (max-width: 768px) {
-  .contact-methods {
-    grid-template-columns: 1fr;
-  }
+.contact-row a:hover {
+  color: var(--accent);
+  border-bottom-color: var(--accent);
 }
 </style>

@@ -1,76 +1,72 @@
 <template>
-  <Transition name="fade-up">
+  <Transition name="fade">
     <button
       v-if="visible"
-      class="scroll-to-top"
+      class="to-top"
+      type="button"
       aria-label="回到頂部"
-      @click="scrollToTop"
-    >
-      ↑
-    </button>
+      @click="scrollTop"
+    >↑</button>
   </Transition>
 </template>
 
-<script>
-export default {
-  name: 'ScrollToTop',
-  data() {
-    return {
-      visible: false
-    };
-  },
-  mounted() {
-    window.addEventListener('scroll', this.onScroll, { passive: true });
-  },
-  beforeUnmount() {
-    window.removeEventListener('scroll', this.onScroll);
-  },
-  methods: {
-    onScroll() {
-      this.visible = window.scrollY > 300;
-    },
-    scrollToTop() {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-  }
+<script setup>
+import { ref, onMounted, onBeforeUnmount } from 'vue';
+
+const visible = ref(false);
+const onScroll = () => {
+  visible.value = window.scrollY > 600;
+};
+
+onMounted(() => {
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+});
+
+onBeforeUnmount(() => {
+  window.removeEventListener('scroll', onScroll);
+});
+
+const scrollTop = () => {
+  const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  window.scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' });
 };
 </script>
 
 <style scoped>
-.scroll-to-top {
+.to-top {
   position: fixed;
-  bottom: 2rem;
-  right: 2rem;
-  z-index: var(--z-fixed);
-  width: 48px;
-  height: 48px;
-  border-radius: var(--radius-full);
-  border: none;
-  background: var(--gradient-primary);
-  color: white;
-  font-size: 1.25rem;
-  font-weight: 700;
+  right: 20px;
+  bottom: calc(20px + env(safe-area-inset-bottom, 0px));
+  z-index: 40;
+  width: 40px;
+  height: 40px;
+  display: grid;
+  place-items: center;
+  font-family: var(--mono);
+  font-size: 15px;
+  color: var(--accent);
+  background: color-mix(in srgb, var(--surface) 88%, transparent);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
   cursor: pointer;
-  box-shadow: var(--shadow-lg), var(--shadow-glow);
-  transition: transform var(--transition-base), box-shadow var(--transition-base);
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  transition: border-color .25s var(--ease), box-shadow .25s var(--ease), color .25s var(--ease);
 }
 
-.scroll-to-top:hover {
-  transform: translateY(-4px);
-  box-shadow: var(--shadow-xl), var(--shadow-glow);
+.to-top:hover {
+  border-color: var(--accent);
+  box-shadow: 0 0 18px -4px var(--accent-glow);
 }
 
-.fade-up-enter-active,
-.fade-up-leave-active {
-  transition: opacity var(--transition-base), transform var(--transition-base);
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity .25s var(--ease), transform .25s var(--ease);
 }
 
-.fade-up-enter-from,
-.fade-up-leave-to {
+.fade-enter-from,
+.fade-leave-to {
   opacity: 0;
-  transform: translateY(12px);
+  transform: translateY(6px);
 }
 </style>

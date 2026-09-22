@@ -1,183 +1,146 @@
 <template>
-  <section id="experience" class="section">
-    <div class="container">
-      <h2 class="section-title">工作經歷</h2>
-      
-      <div class="timeline">
-        <div v-for="(exp, index) in experiences" 
-             :key="exp.id"
-             class="timeline-item animate-fade-in-up"
-             :style="{ animationDelay: `${index * 0.1}s` }">
-          <div class="timeline-marker"></div>
-          <div class="timeline-content card">
-            <div class="experience-header">
-              <div>
-                <h3 class="experience-position">{{ exp.position }}</h3>
-                <h4 class="experience-company">{{ exp.company }}</h4>
-              </div>
-              <div class="experience-meta">
-                <span class="badge">{{ exp.period }}</span>
-                <span class="experience-location">📍 {{ exp.location }}</span>
-              </div>
-            </div>
-            
-            <p class="experience-description">{{ exp.description }}</p>
-            
-            <div class="achievements">
-              <h5>主要成就：</h5>
-              <ul>
-                <li v-for="(achievement, idx) in exp.achievements" :key="idx">
-                  {{ achievement }}
-                </li>
-              </ul>
-            </div>
-          </div>
+  <section class="sec" id="experience">
+    <div class="sec-label">03 ／ Experience</div>
+    <h2 class="sec-title">工作經歷</h2>
+
+    <div class="track">
+      <article class="job" v-for="job in experiences" :key="job.id">
+        <div class="job-when">
+          <span :class="{ now: job.current }">{{ job.period }}</span>
+          <span class="place">{{ job.location }}</span>
         </div>
-      </div>
+        <div>
+          <h3 class="job-role">
+            {{ job.position }}
+            <span class="tag-self" v-if="job.sideProject">Side Project</span>
+          </h3>
+          <p class="job-co">{{ job.company }}</p>
+          <p class="job-sum">{{ job.description }}</p>
+          <ul class="job-list">
+            <li v-for="(item, i) in job.achievements" :key="i">{{ item }}</li>
+          </ul>
+        </div>
+      </article>
     </div>
   </section>
 </template>
 
-<script>
-export default {
-  name: 'ExperienceSection',
-  props: {
-    experiences: {
-      type: Array,
-      required: true
-    }
-  }
-};
+<script setup>
+defineProps({
+  experiences: { type: Array, default: () => [] }
+});
 </script>
 
 <style scoped>
-.timeline {
-  position: relative;
-  padding-left: var(--space-xl);
-}
-
-.timeline::before {
-  content: '';
-  position: absolute;
-  left: 0;
-  top: 0;
-  bottom: 0;
-  width: 2px;
-  background: var(--gradient-primary);
-}
-
-.timeline-item {
-  position: relative;
-  margin-bottom: var(--space-2xl);
-  opacity: 0;
-  animation: fadeInUp 0.6s ease-out forwards;
-}
-
-.timeline-marker {
-  position: absolute;
-  left: calc(-1 * var(--space-xl) - 8px);
-  top: 0;
-  width: 18px;
-  height: 18px;
-  border-radius: 50%;
-  background: var(--gradient-primary);
-  border: 3px solid var(--color-bg-primary);
-  box-shadow: 0 0 0 4px var(--color-bg-secondary);
-  z-index: 1;
-}
-
-.timeline-content {
-  padding: var(--space-lg);
-}
-
-.experience-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  margin-bottom: var(--space-md);
-  gap: var(--space-md);
-}
-
-.experience-position {
-  font-size: var(--font-size-xl);
-  font-weight: 700;
-  color: var(--color-text-primary);
-  margin-bottom: var(--space-xs);
-}
-
-.experience-company {
-  font-size: var(--font-size-lg);
-  font-weight: 600;
-  background: var(--gradient-primary);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-.experience-meta {
+.track {
   display: flex;
   flex-direction: column;
-  align-items: flex-end;
-  gap: var(--space-xs);
-  flex-shrink: 0;
 }
 
-.experience-location {
-  font-size: var(--font-size-sm);
-  color: var(--color-text-tertiary);
+.job {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 14px;
+  padding: 28px 0 32px;
+  border-bottom: 1px solid var(--line-soft);
 }
 
-.experience-description {
-  color: var(--color-text-secondary);
-  margin-bottom: var(--space-md);
-  line-height: 1.7;
+.job:last-child {
+  border-bottom: 0;
+  padding-bottom: 6px;
 }
 
-.achievements h5 {
-  font-size: var(--font-size-base);
+@media (min-width: 780px) {
+  .job {
+    grid-template-columns: 140px 1fr;
+    gap: 36px;
+  }
+}
+
+.job-when {
+  font-family: var(--mono);
+  font-size: 11.5px;
+  letter-spacing: .04em;
+  color: var(--ink-3);
+  font-variant-numeric: tabular-nums;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.job-when .now {
+  color: var(--accent);
+}
+
+.job-when .place {
+  letter-spacing: .12em;
+  font-size: 10px;
+  text-transform: uppercase;
+}
+
+.job-role {
+  font-family: var(--mono);
+  font-size: 17px;
   font-weight: 600;
-  color: var(--color-text-primary);
-  margin-bottom: var(--space-sm);
+  letter-spacing: .02em;
+  line-height: 1.55;
+  margin: 0;
 }
 
-.achievements ul {
-  list-style: none;
+.tag-self {
+  display: inline-block;
+  margin-left: 10px;
+  font-family: var(--mono);
+  font-size: 9.5px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--accent);
+  border: 1px solid color-mix(in srgb, var(--accent) 40%, var(--line));
+  background: var(--accent-soft);
+  padding: 1px 7px;
+  border-radius: var(--radius);
+  vertical-align: middle;
+}
+
+.job-co {
+  margin: 6px 0 0;
+  font-size: 13px;
+  color: var(--ink-2);
+}
+
+.job-sum {
+  margin: 12px 0 0;
+  font-size: 14px;
+  color: var(--ink-2);
+  max-width: 60ch;
+}
+
+.job-list {
+  margin: 14px 0 0;
   padding: 0;
+  list-style: none;
   display: flex;
   flex-direction: column;
-  gap: var(--space-sm);
+  gap: 9px;
+  max-width: 64ch;
 }
 
-.achievements li {
+.job-list li {
   position: relative;
-  padding-left: var(--space-lg);
-  color: var(--color-text-secondary);
-  line-height: 1.6;
+  padding-left: 22px;
+  font-size: 13.8px;
+  line-height: 1.85;
+  color: var(--ink-2);
 }
 
-.achievements li::before {
-  content: '✓';
+.job-list li::before {
+  content: "▸";
   position: absolute;
   left: 0;
-  color: var(--color-accent);
-  font-weight: bold;
-}
-
-@media (max-width: 768px) {
-  .experience-header {
-    flex-direction: column;
-  }
-  
-  .experience-meta {
-    align-items: flex-start;
-  }
-  
-  .timeline {
-    padding-left: var(--space-lg);
-  }
-  
-  .timeline-marker {
-    left: calc(-1 * var(--space-lg) - 8px);
-  }
+  top: 0;
+  font-family: var(--mono);
+  font-size: 11px;
+  line-height: 1.95;
+  color: var(--accent);
 }
 </style>

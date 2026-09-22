@@ -1,201 +1,184 @@
 <template>
-  <nav class="navbar">
-    <div class="container navbar-content">
-      <div class="navbar-brand">
-        <span class="logo-text">{{ name }}</span>
-      </div>
-      
-      <button class="menu-toggle" @click="toggleMenu" aria-label="Toggle menu">
-        <span></span>
-        <span></span>
-        <span></span>
-      </button>
-      
-      <ul class="navbar-menu" :class="{ 'is-active': isMenuOpen }">
-        <li v-for="item in menuItems" :key="item.id">
-          <a 
-            :href="item.href" 
-            class="navbar-link"
-            :class="{ 'is-active': activeSection === item.id }"
-            @click="handleNavClick(item.id)"
-          >
-            {{ item.label }}
-          </a>
-        </li>
-      </ul>
+  <!-- 手機：固定頂部列 -->
+  <header class="topbar">
+    <b>{{ name }}<span>_</span></b>
+    <span>全端 ／ AI 應用</span>
+  </header>
+
+  <!-- 桌機：左側章節索引 -->
+  <aside class="index">
+    <div class="index-mark">{{ nameEn }}<span>_</span></div>
+    <div class="index-role">Full-Stack ／ AI Engineer</div>
+    <nav class="index-nav" aria-label="頁面章節">
+      <a
+        v-for="item in sections"
+        :key="item.id"
+        :href="`#${item.id}`"
+        :class="{ on: active === item.id }"
+      >{{ item.no }} ／ {{ item.label }}</a>
+    </nav>
+    <div class="index-status">
+      <span><i class="dot"></i>{{ status }}</span>
+      <span>台中 ・ TAIWAN</span>
+      <span>2019 — 2026</span>
     </div>
-  </nav>
+  </aside>
 </template>
 
-<script>
-export default {
-  name: 'NavBar',
-  props: {
-    name: {
-      type: String,
-      default: '個人簡歷'
-    }
-  },
-  data() {
-    return {
-      isMenuOpen: false,
-      activeSection: 'home',
-      menuItems: [
-        { id: 'home', label: '首頁', href: '#home' },
-        { id: 'about', label: '關於我', href: '#about' },
-        { id: 'experience', label: '工作經歷', href: '#experience' },
-        { id: 'projects', label: '專案作品', href: '#projects' },
-        { id: 'contact', label: '聯絡方式', href: '#contact' }
-      ]
-    };
-  },
-  methods: {
-    toggleMenu() {
-      this.isMenuOpen = !this.isMenuOpen;
-    },
-    handleNavClick(sectionId) {
-      this.activeSection = sectionId;
-      this.isMenuOpen = false;
-    }
-  },
-  mounted() {
-    // Observe sections for active state
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            this.activeSection = entry.target.id;
-          }
-        });
-      },
-      { threshold: 0.5 }
-    );
+<script setup>
+import { ref, onMounted, onBeforeUnmount } from 'vue';
 
-    this.menuItems.forEach((item) => {
-      const section = document.querySelector(item.href);
-      if (section) observer.observe(section);
-    });
-  }
-};
+defineProps({
+  name: { type: String, default: '' },
+  nameEn: { type: String, default: '' },
+  status: { type: String, default: '' }
+});
+
+const sections = [
+  { id: 'profile', no: '01', label: '簡介' },
+  { id: 'skills', no: '02', label: '技術' },
+  { id: 'experience', no: '03', label: '經歷' },
+  { id: 'works', no: '04', label: '專案' },
+  { id: 'certs', no: '05', label: '認證' },
+  { id: 'contact', no: '06', label: '聯絡' }
+];
+
+const active = ref('profile');
+let observer = null;
+
+onMounted(() => {
+  if (!('IntersectionObserver' in window)) return;
+  observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) active.value = entry.target.id;
+      });
+    },
+    { rootMargin: '-20% 0px -70% 0px' }
+  );
+  sections.forEach((item) => {
+    const el = document.getElementById(item.id);
+    if (el) observer.observe(el);
+  });
+});
+
+onBeforeUnmount(() => {
+  if (observer) observer.disconnect();
+});
 </script>
 
 <style scoped>
-.navbar {
+/* 手機頂部列：固定定位，不佔 grid 欄位 */
+.topbar {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
-  z-index: var(--z-fixed);
-  background: rgba(15, 15, 20, 0.8);
-  backdrop-filter: blur(20px);
-  border-bottom: 1px solid var(--color-border);
-  transition: all var(--transition-base);
-}
-
-.navbar-content {
+  z-index: 30;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  height: 70px;
+  gap: 12px;
+  background: color-mix(in srgb, var(--ground) 86%, transparent);
+  backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--line);
+  padding: 12px 20px;
+  padding-top: calc(12px + env(safe-area-inset-top, 0px));
+  font-family: var(--mono);
+  font-size: 10.5px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--ink-3);
 }
 
-.navbar-brand {
-  display: flex;
-  align-items: center;
+.topbar b {
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: .04em;
+  color: var(--ink);
+  text-transform: none;
 }
 
-.logo-text {
-  font-size: var(--font-size-xl);
-  font-weight: 800;
-  background: var(--gradient-primary);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+.topbar b span {
+  color: var(--accent);
 }
 
-.menu-toggle {
+.index {
   display: none;
-  flex-direction: column;
-  gap: 5px;
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 8px;
 }
 
-.menu-toggle span {
-  width: 25px;
-  height: 2px;
-  background: var(--color-text-primary);
-  transition: all var(--transition-base);
-}
+@media (min-width: 980px) {
+  .topbar {
+    display: none;
+  }
 
-.navbar-menu {
-  display: flex;
-  gap: var(--space-lg);
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-
-.navbar-link {
-  position: relative;
-  display: block;
-  padding: var(--space-xs) var(--space-sm);
-  color: var(--color-text-secondary);
-  font-weight: 500;
-  transition: color var(--transition-fast);
-}
-
-.navbar-link::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 50%;
-  width: 0;
-  height: 2px;
-  background: var(--gradient-primary);
-  transform: translateX(-50%);
-  transition: width var(--transition-base);
-}
-
-.navbar-link:hover,
-.navbar-link.is-active {
-  color: var(--color-text-primary);
-}
-
-.navbar-link.is-active::after {
-  width: 100%;
-}
-
-/* Mobile Responsive */
-@media (max-width: 768px) {
-  .menu-toggle {
+  .index {
     display: flex;
-  }
-  
-  .navbar-menu {
-    position: absolute;
-    top: 70px;
-    left: 0;
-    right: 0;
     flex-direction: column;
-    gap: 0;
-    background: rgba(15, 15, 20, 0.95);
-    backdrop-filter: blur(20px);
-    border-bottom: 1px solid var(--color-border);
-    padding: var(--space-md) 0;
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height var(--transition-base);
+    position: sticky;
+    top: env(safe-area-inset-top, 0px);
+    align-self: start;
+    height: 100vh;
+    padding-block: 52px 28px;
+    border-right: 1px solid var(--line);
+    margin-right: -1px;
   }
-  
-  .navbar-menu.is-active {
-    max-height: 400px;
-  }
-  
-  .navbar-link {
-    padding: var(--space-md) var(--space-lg);
-  }
+}
+
+.index-mark {
+  font-family: var(--mono);
+  font-size: 19px;
+  font-weight: 600;
+  letter-spacing: .04em;
+  line-height: 1.35;
+}
+
+.index-mark span {
+  color: var(--accent);
+}
+
+.index-role {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  margin-top: 10px;
+}
+
+.index-nav {
+  margin-top: 36px;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.index-nav a {
+  font-family: var(--mono);
+  font-size: 11.5px;
+  letter-spacing: .08em;
+  color: var(--ink-3);
+  padding: 7px 0 7px 16px;
+  border-left: 1px solid var(--line);
+  transition: color .25s var(--ease), border-color .25s var(--ease), background .25s var(--ease);
+}
+
+.index-nav a:hover,
+.index-nav a.on {
+  color: var(--accent);
+  border-left-color: var(--accent);
+  background: var(--accent-soft);
+}
+
+.index-status {
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--ink-3);
 }
 </style>
