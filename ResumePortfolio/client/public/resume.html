@@ -1,603 +1,347 @@
 <!DOCTYPE html>
 <html lang="zh-TW">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>陳昭儒 - 全端工程師 履歷</title>
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&family=Inter:wght@300;400;500;600;700&display=swap');
-
-    :root {
-      --primary: #1a3a5c;
-      --accent: #2d7dd2;
-      --accent-light: #e8f2fc;
-      --text-dark: #1a1a2e;
-      --text-mid: #4a4a6a;
-      --text-light: #6b7280;
-      --border: #d1d5db;
-      --bg-section: #f8fafc;
-      --tag-bg: #e0eaf7;
-      --tag-color: #1a3a5c;
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>陳昭儒 - 全端工程師 履歷</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1b2430;
+    --mid: #46505e;
+    --soft: #6b7482;
+    --line: #d6dbe2;
+    --navy: #17324d;
+    --accent: #1f6fb2;
+    --accent-bg: #eaf2fa;
+    --tag-bg: #eef1f5;
+    --ai: #0f7a6c;
+    --ai-bg: #e6f4f1;
+  }
+  @page {
+    size: A4;
+    margin: 13mm 15mm 14mm;
+    @bottom-right {
+      content: "陳昭儒｜第 " counter(page) " / " counter(pages) " 頁";
+      font-family: "Noto Sans TC", "Microsoft JhengHei", "PingFang TC", sans-serif;
+      font-size: 7.5pt;
+      color: #8a929e;
     }
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: "Noto Sans TC", "Microsoft JhengHei", "PingFang TC", sans-serif;
+    color: var(--ink);
+    font-size: 9.4pt;
+    line-height: 1.55;
+    background: #fff;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  a { color: inherit; text-decoration: none; }
 
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+  /* ── 抬頭 ── */
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    padding-bottom: 9px;
+    border-bottom: 2.5px solid var(--navy);
+  }
+  .name { font-size: 24pt; font-weight: 700; color: var(--navy); letter-spacing: 3px; line-height: 1.1; }
+  .name-en { font-size: 10pt; font-weight: 600; color: var(--soft); letter-spacing: 3px; margin-left: 10px; }
+  .role { margin-top: 6px; font-size: 10.5pt; font-weight: 600; color: var(--accent); letter-spacing: 1px; }
+  .role .sep { color: var(--line); margin: 0 6px; }
+  .contact {
+    display: grid;
+    grid-template-columns: auto auto;
+    column-gap: 10px;
+    font-size: 8.6pt;
+    color: var(--mid);
+    line-height: 1.75;
+  }
+  .contact b { color: var(--soft); font-weight: 500; }
 
-    body {
-      font-family: 'Noto Sans TC', 'Inter', sans-serif;
-      color: var(--text-dark);
-      background: #fff;
-      font-size: 10.5pt;
-      line-height: 1.6;
-    }
+  .facts { display: flex; gap: 8px; margin: 10px 0 2px; }
+  .fact {
+    flex: 1;
+    display: flex;
+    align-items: baseline;
+    gap: 5px;
+    padding: 5px 10px;
+    background: var(--accent-bg);
+    border-radius: 4px;
+  }
+  .fact .v { font-size: 14pt; font-weight: 700; color: var(--navy); line-height: 1.2; }
+  .fact .u { font-size: 8.4pt; color: var(--navy); }
+  .fact .l { margin-left: auto; font-size: 8.2pt; color: var(--soft); }
 
-    /* ─── Page layout ─── */
+  /* ── 區塊 ── */
+  .section { margin-top: 13px; }
+  .section-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 11pt;
+    font-weight: 700;
+    color: var(--navy);
+    letter-spacing: 2px;
+    margin-bottom: 7px;
+    break-after: avoid;
+  }
+  .section-title::after { content: ""; flex: 1; height: 1px; background: var(--line); }
+
+  .bio { color: var(--mid); text-align: justify; }
+
+  /* ── 技能 ── */
+  .skills { display: grid; grid-template-columns: 74px 1fr; row-gap: 4px; column-gap: 10px; }
+  .skill-cat { font-size: 8.6pt; font-weight: 700; color: var(--navy); padding-top: 1px; }
+  .skill-cat.ai { color: var(--ai); }
+  .tags { display: flex; flex-wrap: wrap; gap: 3px 4px; }
+  .tag {
+    font-size: 8pt;
+    padding: 0 7px;
+    border-radius: 3px;
+    background: var(--tag-bg);
+    color: var(--mid);
+    line-height: 1.75;
+  }
+  .tag.ai { background: var(--ai-bg); color: var(--ai); font-weight: 500; }
+
+  /* ── 經歷 ── */
+  .item { padding: 8px 0 9px; border-bottom: 1px dashed var(--line); break-inside: avoid; }
+  .item:last-child { border-bottom: none; padding-bottom: 0; }
+  .item-head { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; }
+  .org { font-size: 10.2pt; font-weight: 700; color: var(--navy); }
+  .period { font-size: 8.6pt; font-weight: 600; color: var(--accent); white-space: nowrap; font-variant-numeric: tabular-nums; }
+  .sub { font-size: 8.8pt; color: var(--soft); margin-top: 1px; }
+  .sub .pos { color: var(--ink); font-weight: 600; }
+  .sub .dot { margin: 0 5px; color: var(--line); }
+  .badge {
+    display: inline-block;
+    font-size: 7.6pt;
+    font-weight: 600;
+    padding: 0 6px;
+    margin-left: 6px;
+    border-radius: 3px;
+    background: var(--ai-bg);
+    color: var(--ai);
+    vertical-align: 1px;
+  }
+  .desc { margin-top: 3px; color: var(--mid); }
+  ul.points { list-style: none; margin-top: 3px; }
+  ul.points li { position: relative; padding-left: 13px; color: var(--mid); margin-top: 1px; }
+  ul.points li::before {
+    content: "";
+    position: absolute;
+    left: 2px;
+    top: 0.62em;
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: var(--accent);
+  }
+  .item .tags { margin-top: 5px; }
+
+  /* ── 證照 ── */
+  .certs { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .cert { padding: 7px 10px; border: 1px solid var(--line); border-radius: 4px; break-inside: avoid; }
+  .cert-name { font-weight: 700; color: var(--navy); font-size: 9.2pt; }
+  .cert-org { font-size: 8.4pt; color: var(--accent); font-weight: 600; }
+  .cert-desc { font-size: 8.4pt; color: var(--soft); margin-top: 2px; }
+  /* ── 螢幕預覽（列印時不套用） ── */
+  @media screen {
+    body { background: #e5e7eb; }
     .page {
       width: 210mm;
       min-height: 297mm;
-      margin: 0 auto;
-      padding: 14mm 16mm 14mm 16mm;
+      margin: 0 auto 30px;
+      padding: 13mm 15mm 14mm;
       background: #fff;
+      box-shadow: 0 4px 32px rgba(0, 0, 0, 0.18);
     }
-
-    /* ─── Header ─── */
-    .header {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-end;
-      padding-bottom: 10px;
-      border-bottom: 3px solid var(--primary);
-      margin-bottom: 14px;
-    }
-
-    .header-left h1 {
-      font-size: 26pt;
-      font-weight: 700;
-      color: var(--primary);
-      letter-spacing: 2px;
-    }
-
-    .header-left .title-badge {
-      display: inline-block;
-      margin-top: 4px;
-      padding: 2px 12px;
-      background: var(--accent);
-      color: #fff;
-      border-radius: 20px;
-      font-size: 10pt;
-      font-weight: 500;
-      letter-spacing: 1px;
-    }
-
-    .header-right {
-      text-align: right;
-      font-size: 9pt;
-      color: var(--text-mid);
-      line-height: 1.8;
-    }
-
-    .header-right a {
-      color: var(--accent);
-      text-decoration: none;
-    }
-
-    /* ─── Sections ─── */
-    .section {
-      margin-bottom: 14px;
-    }
-
-    .section-title {
-      font-size: 11pt;
-      font-weight: 700;
-      color: var(--primary);
-      text-transform: uppercase;
-      letter-spacing: 1.5px;
-      padding-bottom: 4px;
-      border-bottom: 1.5px solid var(--accent);
-      margin-bottom: 10px;
-    }
-
-    /* ─── Bio ─── */
-    .bio {
-      font-size: 9.5pt;
-      color: var(--text-mid);
-      line-height: 1.75;
-      background: var(--bg-section);
-      padding: 8px 12px;
-      border-left: 3px solid var(--accent);
-      border-radius: 0 4px 4px 0;
-    }
-
-    /* ─── Skills ─── */
-    .skills-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 8px;
-    }
-
-    .skill-group {
-      background: var(--bg-section);
-      border-radius: 6px;
-      padding: 7px 10px;
-    }
-
-    .skill-category {
-      font-size: 8.5pt;
-      font-weight: 700;
-      color: var(--primary);
-      margin-bottom: 4px;
-      text-transform: uppercase;
-      letter-spacing: 0.8px;
-    }
-
-    .skill-tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 4px;
-    }
-
-    .skill-tag {
-      background: var(--tag-bg);
-      color: var(--tag-color);
-      padding: 1px 7px;
-      border-radius: 10px;
-      font-size: 8pt;
-      font-weight: 500;
-    }
-
-    /* ─── Experience ─── */
-    .exp-item {
-      margin-bottom: 12px;
-      padding-bottom: 12px;
-      border-bottom: 1px dashed var(--border);
-    }
-
-    .exp-item:last-child {
-      border-bottom: none;
-      margin-bottom: 0;
-      padding-bottom: 0;
-    }
-
-    .exp-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      margin-bottom: 2px;
-    }
-
-    .exp-company {
-      font-size: 10.5pt;
-      font-weight: 700;
-      color: var(--primary);
-    }
-
-    .exp-period {
-      font-size: 8.5pt;
-      color: var(--text-light);
-      white-space: nowrap;
-      margin-left: 8px;
-    }
-
-    .exp-position {
-      font-size: 9.5pt;
-      font-weight: 600;
-      color: var(--accent);
-      margin-bottom: 2px;
-    }
-
-    .exp-location {
-      font-size: 8.5pt;
-      color: var(--text-light);
-      margin-bottom: 5px;
-    }
-
-    .exp-desc {
-      font-size: 9pt;
-      color: var(--text-mid);
-      margin-bottom: 5px;
-    }
-
-    .exp-achievements {
-      list-style: none;
-      padding-left: 10px;
-    }
-
-    .exp-achievements li {
-      font-size: 9pt;
-      color: var(--text-mid);
-      margin-bottom: 3px;
-      position: relative;
-      padding-left: 12px;
-    }
-
-    .exp-achievements li::before {
-      content: '▸';
-      color: var(--accent);
-      position: absolute;
-      left: 0;
-      font-size: 8pt;
-    }
-
-    /* ─── Projects ─── */
-    .projects-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-    }
-
-    .project-card {
-      background: var(--bg-section);
-      border-radius: 6px;
-      padding: 10px 12px;
-      border-left: 3px solid var(--accent);
-    }
-
-    .project-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      margin-bottom: 3px;
-    }
-
-    .project-name {
-      font-size: 9.5pt;
-      font-weight: 700;
-      color: var(--primary);
-    }
-
-    .project-period {
-      font-size: 8pt;
-      color: var(--text-light);
-      white-space: nowrap;
-      margin-left: 6px;
-    }
-
-    .project-category {
-      font-size: 8pt;
-      color: var(--accent);
-      font-weight: 500;
-      margin-bottom: 4px;
-    }
-
-    .project-desc {
-      font-size: 8.5pt;
-      color: var(--text-mid);
-      margin-bottom: 5px;
-    }
-
-    .project-tech {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 3px;
-    }
-
-    .tech-tag {
-      background: #dbeafe;
-      color: #1e40af;
-      padding: 1px 6px;
-      border-radius: 8px;
-      font-size: 7.5pt;
-    }
-
-    /* ─── Education / Certs ─── */
-    .edu-item {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      margin-bottom: 8px;
-      padding: 8px 12px;
-      background: var(--bg-section);
-      border-radius: 6px;
-    }
-
-    .edu-left .edu-school {
-      font-size: 9.5pt;
-      font-weight: 700;
-      color: var(--primary);
-    }
-
-    .edu-left .edu-degree {
-      font-size: 9pt;
-      color: var(--text-mid);
-    }
-
-    .edu-left .edu-desc {
-      font-size: 8.5pt;
-      color: var(--text-light);
-    }
-
-    .edu-period {
-      font-size: 8.5pt;
-      color: var(--accent);
-      font-weight: 600;
-      white-space: nowrap;
-      margin-left: 8px;
-    }
-
-    /* ─── Print ─── */
-    @media print {
-      body { background: #fff; }
-      .page { margin: 0; padding: 12mm 14mm; }
-      .no-print { display: none !important; }
-    }
-
-    /* ─── Print button (screen only) ─── */
-    .print-btn-wrap {
-      text-align: center;
-      margin: 20px 0 0;
-    }
-
-    .print-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 12px 32px;
-      background: var(--primary);
-      color: #fff;
-      border: none;
-      border-radius: 30px;
-      font-size: 11pt;
-      font-weight: 600;
-      cursor: pointer;
-      letter-spacing: 1px;
-      box-shadow: 0 4px 16px rgba(26,58,92,0.25);
-      transition: background 0.2s;
-    }
-
-    .print-btn:hover {
-      background: var(--accent);
-    }
-
-    @media screen {
-      body { background: #e5e7eb; }
-      .page {
-        box-shadow: 0 4px 32px rgba(0,0,0,0.18);
-        margin: 30px auto;
-      }
-    }
-  </style>
+  }
+  @media screen and (max-width: 820px) {
+    .page { width: auto; min-height: 0; margin: 0 0 20px; padding: 24px 16px; }
+    .header { flex-direction: column; align-items: flex-start; gap: 10px; }
+    .facts { flex-wrap: wrap; }
+    .fact { flex: 1 1 140px; }
+    .item-head { flex-direction: column; gap: 0; }
+    .certs { grid-template-columns: 1fr; }
+  }
+  @media print {
+    .no-print { display: none !important; }
+  }
+  .print-btn-wrap { text-align: center; padding: 20px 0; }
+  .print-btn {
+    padding: 10px 28px;
+    background: var(--navy);
+    color: #fff;
+    border: none;
+    border-radius: 30px;
+    font: inherit;
+    font-size: 10.5pt;
+    font-weight: 600;
+    letter-spacing: 1px;
+    cursor: pointer;
+    box-shadow: 0 4px 16px rgba(23, 50, 77, 0.25);
+    transition: background 0.2s;
+  }
+  .print-btn:hover { background: var(--accent); }
+</style>
 </head>
 <body>
 
-<div class="print-btn-wrap no-print">
-  <button class="print-btn" onclick="window.print()">
-    🖨️ 列印 / 儲存為 PDF
-  </button>
+<div class="print-btn-wrap no-print"><button class="print-btn" onclick="window.print()">列印 / 儲存為 PDF</button></div>
+
+<main class="page">
+
+<!-- 抬頭 -->
+<header class="header">
+  <div>
+    <div class="name">陳昭儒<span class="name-en">RYAN CHEN</span></div>
+    <div class="role">全端工程師<span class="sep">|</span>AI 應用開發</div>
+  </div>
+  <div class="contact">
+    <b>Email</b><span><a href="mailto:a0963181933@gmail.com">a0963181933@gmail.com</a></span>
+    <b>電話</b><span>0963-181-933</span>
+    <b>地點</b><span>台中, 台灣</span>
+    <b>GitHub</b><span><a href="https://github.com/Chaogga0116">github.com/Chaogga0116</a></span>
+  </div>
+</header>
+
+<div class="facts">
+  <div class="fact"><span class="v">6</span><span class="u">年以上</span><span class="l">實務年資</span></div>
+  <div class="fact"><span class="v">3</span><span class="u">家</span><span class="l">任職企業</span></div>
+  <div class="fact"><span class="v">5</span><span class="u">項</span><span class="l">主導專案</span></div>
 </div>
 
-<div class="page">
+<!-- 個人簡介 -->
+<section class="section">
+  <h2 class="section-title">個人簡介</h2>
+  <p class="bio">擁有 6 年以上全端開發經驗的軟體工程師，後端專精 ASP.NET、C# 與 Python FastAPI，前端熟悉 Vue 3、React。近年投入 AI 應用開發，自建 LLM Agent 平台，實作向量記憶檢索、多模型路由與自動化驗證流程，並在日常開發導入 Cursor、Copilot、Claude Code 提升產出效率。具備從需求分析、架構設計到部署維運的完整開發能力，曾參與體育直播服務、政府 ERP 與半導體廠區 E 化等大型專案，注重程式碼品質與系統效能。</p>
+</section>
 
-  <!-- ── Header ── -->
-  <div class="header">
-    <div class="header-left">
-      <h1>陳昭儒</h1>
-      <span class="title-badge">全端工程師</span>
+<!-- 專業技能 -->
+<section class="section">
+  <h2 class="section-title">專業技能</h2>
+  <div class="skills">
+    <div class="skill-cat ai">AI 應用</div>
+    <div class="tags"><span class="tag ai">LLM 應用開發</span><span class="tag ai">AI Agent 編排</span><span class="tag ai">RAG／向量檢索</span><span class="tag ai">Prompt 工程</span><span class="tag ai">Claude Code</span><span class="tag ai">Cursor</span><span class="tag ai">Copilot</span></div>
+    <div class="skill-cat">程式語言</div>
+    <div class="tags"><span class="tag">C#</span><span class="tag">ASP.NET</span><span class="tag">Python</span><span class="tag">Java</span><span class="tag">JavaScript</span></div>
+    <div class="skill-cat">後端架構</div>
+    <div class="tags"><span class="tag">MVC</span><span class="tag">MVVM</span><span class="tag">.NET Framework</span><span class="tag">FastAPI</span><span class="tag">Entity Framework</span></div>
+    <div class="skill-cat">前端框架</div>
+    <div class="tags"><span class="tag">Vue 3</span><span class="tag">React</span><span class="tag">Knockout</span></div>
+    <div class="skill-cat">資料庫</div>
+    <div class="tags"><span class="tag">MSSQL</span><span class="tag">Redis</span><span class="tag">MySQL</span><span class="tag">MongoDB</span><span class="tag">Firebase</span><span class="tag">SQLite</span></div>
+    <div class="skill-cat">工具與雲端</div>
+    <div class="tags"><span class="tag">Git</span><span class="tag">Docker</span><span class="tag">K8s</span><span class="tag">GCP</span><span class="tag">AWS</span><span class="tag">Sentry</span><span class="tag">Rider</span><span class="tag">Visual Studio</span></div>
+    <div class="skill-cat">其他</div>
+    <div class="tags"><span class="tag">Unity3D</span><span class="tag">Android</span><span class="tag">ERP 系統</span><span class="tag">中英打 75–100</span></div>
+  </div>
+</section>
+
+<!-- 經歷（順序依 mockData.js） -->
+<section class="section">
+  <h2 class="section-title">工作經歷與專案</h2>
+
+  <div class="item">
+    <div class="item-head">
+      <div class="org">英屬維京群島商維嘉思科技股份有限公司台灣分公司</div>
+      <div class="period">2024.11 — 現在</div>
     </div>
-    <div class="header-right">
-      📧 <a href="mailto:a0963181933@gmail.com">a0963181933@gmail.com</a><br/>
-      📱 0963181933<br/>
-      📍 台中, 台灣
-    </div>
+    <div class="sub"><span class="pos">全端工程師</span><span class="dot">·</span>台中</div>
+    <p class="desc">負責體育直播軟體服務系統的全端開發與維護。</p>
+    <ul class="points">
+      <li>前端以 Vue 3 開發直播與賽事功能模組，後端採 MVVM 架構分層，導入 Entity Framework 進行資料存取</li>
+      <li>整合 MSSQL、Redis、Firebase 處理賽事即時資料的高併發讀寫，以快取策略與資料結構調整降低資料庫負載</li>
+      <li>以 GCP 部署服務與管理資源，串接 Sentry 建立錯誤追蹤與告警，持續監控產品穩定性</li>
+      <li>導入 Cursor、Copilot、Claude Code 進行程式生成、重構與程式碼審查，縮短開發與除錯時間</li>
+    </ul>
+    <div class="tags"><span class="tag">Vue 3</span><span class="tag">MVVM</span><span class="tag">Entity Framework</span><span class="tag">MSSQL</span><span class="tag">Redis</span><span class="tag">Firebase</span><span class="tag">GCP</span><span class="tag">Sentry</span></div>
   </div>
 
-  <!-- ── 個人簡介 ── -->
-  <div class="section">
-    <div class="section-title">個人簡介</div>
-    <p class="bio">
-      擁有 4–5 年全端開發經驗的軟體工程師，專精於 ASP.NET、C# 後端架構與 Vue.js、React 前端技術。
-      具備完整的系統開發能力，從需求分析、架構設計到部署維運皆能獨立完成。曾參與大型企業級專案開發，
-      熟悉 ERP 系統、電商平台及數據處理系統的建置與優化。注重程式碼品質與系統效能，善於運用現代化技術解決複雜的業務需求。
-    </p>
+  <div class="item">
+    <div class="item-head">
+      <div class="org">brain_ai 自架 AI 助理平台<span class="badge">個人專案</span></div>
+      <div class="period">2026.06 — 現在</div>
+    </div>
+    <div class="sub"><span class="pos">獨立開發與維運</span></div>
+    <p class="desc">以 LLM 為核心的個人 AI 助理／開發管家，具備長期記憶、背景任務編排與自動驗證迴圈。</p>
+    <ul class="points">
+      <li>後端 Python FastAPI（約 388 支模組、8 萬行），前端 Vue 3 + Vite，以 Docker Compose 容器化交付並長期運行</li>
+      <li>實作多模型供應商路由與語意意圖分類，依任務型態自動分派模型，並在服務失敗時自動降級</li>
+      <li>SQLite 搭配本地向量模型做長期記憶召回，向量模型不可用時降級為全文關鍵字檢索，確保檢索不中斷</li>
+      <li>自研任務管線引擎與自動驗證修正迴圈，長任務拆為可中斷續跑的步驟</li>
+      <li>181 組 pytest 測試、ruff 靜態檢查與自建提交閘門；Argon2id 雜湊、Fernet 加密、指令與路徑白名單</li>
+    </ul>
+    <div class="tags"><span class="tag ai">Python</span><span class="tag ai">FastAPI</span><span class="tag ai">Vue 3</span><span class="tag ai">Vite</span><span class="tag ai">SQLite</span><span class="tag ai">Docker Compose</span><span class="tag ai">LLM</span><span class="tag ai">RAG</span><span class="tag ai">OpenTelemetry</span></div>
   </div>
 
-  <!-- ── 專業技能 ── -->
-  <div class="section">
-    <div class="section-title">專業技能</div>
-    <div class="skills-grid">
-      <div class="skill-group">
-        <div class="skill-category">程式語言</div>
-        <div class="skill-tags">
-          <span class="skill-tag">ASP.NET</span>
-          <span class="skill-tag">C#</span>
-          <span class="skill-tag">Java</span>
-          <span class="skill-tag">JavaScript</span>
-        </div>
-      </div>
-      <div class="skill-group">
-        <div class="skill-category">後端架構</div>
-        <div class="skill-tags">
-          <span class="skill-tag">MVC</span>
-          <span class="skill-tag">MVVM</span>
-          <span class="skill-tag">.NET Framework</span>
-        </div>
-      </div>
-      <div class="skill-group">
-        <div class="skill-category">前端框架</div>
-        <div class="skill-tags">
-          <span class="skill-tag">Vue 3</span>
-          <span class="skill-tag">React</span>
-          <span class="skill-tag">KnockOut</span>
-        </div>
-      </div>
-      <div class="skill-group">
-        <div class="skill-category">資料庫</div>
-        <div class="skill-tags">
-          <span class="skill-tag">MSSQL</span>
-          <span class="skill-tag">Redis</span>
-          <span class="skill-tag">MySQL</span>
-          <span class="skill-tag">MongoDB</span>
-          <span class="skill-tag">Firebase</span>
-        </div>
-      </div>
-      <div class="skill-group">
-        <div class="skill-category">開發工具</div>
-        <div class="skill-tags">
-          <span class="skill-tag">Cursor</span>
-          <span class="skill-tag">Visual Studio</span>
-          <span class="skill-tag">Git</span>
-          <span class="skill-tag">Docker</span>
-          <span class="skill-tag">GCP</span>
-          <span class="skill-tag">AWS</span>
-          <span class="skill-tag">K8S</span>
-        </div>
-      </div>
-      <div class="skill-group">
-        <div class="skill-category">其他技術</div>
-        <div class="skill-tags">
-          <span class="skill-tag">Unity3D</span>
-          <span class="skill-tag">Android</span>
-          <span class="skill-tag">ERP 系統</span>
-          <span class="skill-tag">中/英打 75-100</span>
-        </div>
-      </div>
+  <div class="item">
+    <div class="item-head">
+      <div class="org">艾富資訊股份有限公司</div>
+      <div class="period">2021.04 — 2023.08</div>
     </div>
+    <div class="sub"><span class="pos">程式設計師</span><span class="dot">·</span>台中 南屯</div>
+    <p class="desc">為政府與公家機關製作 ERP 管理系統。</p>
+    <ul class="points">
+      <li>開發政府單位專用的 ERP 系統，整合採購、財務等多個業務流程模組</li>
+      <li>使用 C#、ASP.NET、JavaScript、MS SQL、IIS 進行系統開發，設計資料表結構與多部門權限控管</li>
+      <li>獨立負責需求分析、系統設計、程式開發到測試部署的完整開發週期</li>
+    </ul>
+    <div class="tags"><span class="tag">C#</span><span class="tag">ASP.NET</span><span class="tag">JavaScript</span><span class="tag">MS SQL</span><span class="tag">HTML</span><span class="tag">IIS</span></div>
   </div>
 
-  <!-- ── 工作經歷 ── -->
-  <div class="section">
-    <div class="section-title">工作經歷</div>
-
-    <div class="exp-item">
-      <div class="exp-header">
-        <div class="exp-company">英屬維京群島商維嘉思科技股份有限公司台灣分公司</div>
-        <div class="exp-period">2024/11 — 現在</div>
-      </div>
-      <div class="exp-position">全端工程師</div>
-      <div class="exp-location">📍 台中</div>
-      <div class="exp-desc">負責體育直播軟體服務系統的全端開發與維護</div>
-      <ul class="exp-achievements">
-        <li>運用 Vue 3 前端框架結合後端 MVVM 架構製作軟體，導入 EF 連接資料庫</li>
-        <li>使用 MSSQL、Redis、Firebase 處理資料，經常處理高併發資料的讀寫</li>
-        <li>運用 GCP 及 Sentry 監控產品穩定性，善用 Cursor、Copilot 提升開發效率</li>
-      </ul>
+  <div class="item">
+    <div class="item-head">
+      <div class="org">英資科技股份有限公司</div>
+      <div class="period">2019.02 — 2021.02</div>
     </div>
-
-    <div class="exp-item">
-      <div class="exp-header">
-        <div class="exp-company">艾富資訊股份有限公司</div>
-        <div class="exp-period">2021/04 — 2023/08</div>
-      </div>
-      <div class="exp-position">程式設計師</div>
-      <div class="exp-location">📍 台中市南屯區</div>
-      <div class="exp-desc">為政府與公家機關製作 ERP 管理系統</div>
-      <ul class="exp-achievements">
-        <li>開發政府單位專用的 ERP 系統，整合多個業務流程模組</li>
-        <li>使用 C#、JavaScript、MS SQL、HTML、ASP.NET、IIS 進行系統開發</li>
-        <li>負責需求分析、系統設計、程式開發到測試部署的完整開發週期</li>
-      </ul>
-    </div>
-
-    <div class="exp-item">
-      <div class="exp-header">
-        <div class="exp-company">英資科技股份有限公司</div>
-        <div class="exp-period">2019/02 — 2021/02</div>
-      </div>
-      <div class="exp-position">程式設計工程師</div>
-      <div class="exp-location">📍 台中市大雅區</div>
-      <div class="exp-desc">為台積電全廠區建立 E化系統，項目包含施工 E化、巡檢 E化、AutoMail 等</div>
-      <ul class="exp-achievements">
-        <li>開發台積電廠區使用的自動化系統，提升作業效率</li>
-        <li>使用 C#、MS PDA、WinForm 專案，運用 MSSQL 建立資料庫資料表</li>
-        <li>負責系統需求訪談、程式開發、測試及維護等工作</li>
-      </ul>
-    </div>
+    <div class="sub"><span class="pos">程式設計工程師</span><span class="dot">·</span>台中 大雅</div>
+    <p class="desc">為台積電全廠區建立 E 化系統，項目包含施工 E 化、巡檢 E 化、AutoMail 等。</p>
+    <ul class="points">
+      <li>開發台積電廠區使用的自動化系統，將紙本作業流程數位化，提升現場作業與稽核效率</li>
+      <li>使用 C#、WinForm 搭配 PDA 手持裝置開發現場系統，以 MSSQL 建立資料庫與資料表設計</li>
+      <li>負責系統需求訪談、程式開發、測試及維護</li>
+    </ul>
+    <div class="tags"><span class="tag">C#</span><span class="tag">WinForm</span><span class="tag">MS PDA</span><span class="tag">MSSQL</span></div>
   </div>
 
-  <!-- ── 專案經歷 ── -->
-  <div class="section">
-    <div class="section-title">代表專案</div>
-    <div class="projects-grid">
-      <div class="project-card">
-        <div class="project-header">
-          <div class="project-name">體育直播軟體服務系統</div>
-          <div class="project-period">2024 — 現在</div>
-        </div>
-        <div class="project-category">企業應用</div>
-        <div class="project-desc">使用 Vue 3 與 MVVM 架構開發的體育直播軟體平台，支援高併發資料處理</div>
-        <div class="project-tech">
-          <span class="tech-tag">Vue 3</span>
-          <span class="tech-tag">MVVM</span>
-          <span class="tech-tag">MSSQL</span>
-          <span class="tech-tag">Redis</span>
-          <span class="tech-tag">Firebase</span>
-          <span class="tech-tag">GCP</span>
-        </div>
-      </div>
-      <div class="project-card">
-        <div class="project-header">
-          <div class="project-name">政府機關 ERP 管理系統</div>
-          <div class="project-period">2021 — 2023</div>
-        </div>
-        <div class="project-category">企業應用</div>
-        <div class="project-desc">為政府與公家機關客製化的企業資源規劃系統，整合多業務流程</div>
-        <div class="project-tech">
-          <span class="tech-tag">C#</span>
-          <span class="tech-tag">ASP.NET</span>
-          <span class="tech-tag">JS</span>
-          <span class="tech-tag">MS SQL</span>
-          <span class="tech-tag">IIS</span>
-        </div>
-      </div>
-      <div class="project-card">
-        <div class="project-header">
-          <div class="project-name">台積電廠區 E化系統</div>
-          <div class="project-period">2019 — 2021</div>
-        </div>
-        <div class="project-category">工業自動化</div>
-        <div class="project-desc">為台積電全廠區建立的自動化系統，含施工 E化、巡檢 E化、AutoMail 等模組</div>
-        <div class="project-tech">
-          <span class="tech-tag">C#</span>
-          <span class="tech-tag">WinForm</span>
-          <span class="tech-tag">MS PDA</span>
-          <span class="tech-tag">MSSQL</span>
-        </div>
-      </div>
-      <div class="project-card">
-        <div class="project-header">
-          <div class="project-name">Unity3D 遊戲開發專案</div>
-          <div class="project-period">2020 — 2021</div>
-        </div>
-        <div class="project-category">遊戲開發</div>
-        <div class="project-desc">使用 Unity3D 開發的遊戲專案，實作遊戲邏輯與互動機制</div>
-        <div class="project-tech">
-          <span class="tech-tag">Unity3D</span>
-          <span class="tech-tag">C#</span>
-        </div>
-      </div>
+  <div class="item">
+    <div class="item-head">
+      <div class="org">Unity3D 遊戲開發專案<span class="badge">個人專案</span></div>
+      <div class="period">2020 — 2021</div>
+    </div>
+    <p class="desc">使用 Unity3D 開發的遊戲專案，實作遊戲邏輯與互動機制，並優化遊戲效能與使用者體驗。</p>
+    <div class="tags"><span class="tag">Unity3D</span><span class="tag">C#</span></div>
+  </div>
+</section>
+
+<!-- 證照 -->
+<section class="section">
+  <h2 class="section-title">證照與認證</h2>
+  <div class="certs">
+    <div class="cert">
+      <div class="cert-org">Sun Microsystems</div>
+      <div class="cert-name">SCJP — Sun Certified Java Programmer</div>
+      <div class="cert-desc">Java 程式設計專業認證</div>
+    </div>
+    <div class="cert">
+      <div class="cert-org">TQC／EEC</div>
+      <div class="cert-name">多項電腦技能認證</div>
+      <div class="cert-desc">TQC-DA 資料庫管理系統 Access、TQC-OA Excel／Word／PowerPoint、TQC-PD JAVA</div>
     </div>
   </div>
+</section>
 
-  <!-- ── 證照 & 認證 ── -->
-  <div class="section">
-    <div class="section-title">證照 &amp; 認證</div>
-    <div class="edu-item">
-      <div class="edu-left">
-        <div class="edu-school">Sun Microsystems</div>
-        <div class="edu-degree">SCJP (Sun Certified Java Programmer)</div>
-        <div class="edu-desc">Java 程式設計專業認證</div>
-      </div>
-      <div class="edu-period">已取得</div>
-    </div>
-    <div class="edu-item">
-      <div class="edu-left">
-        <div class="edu-school">TQC / EEC</div>
-        <div class="edu-degree">多項電腦技能認證</div>
-        <div class="edu-desc">TQC-DA 資料庫管理系統 Access・TQC-OA Excel/Word/PowerPoint・TQC-PD JAVA</div>
-      </div>
-      <div class="edu-period">已取得</div>
-    </div>
-  </div>
+</main>
 
-</div><!-- /page -->
-
-<div class="print-btn-wrap no-print" style="margin-bottom:30px;">
-  <button class="print-btn" onclick="window.print()">
-    🖨️ 列印 / 儲存為 PDF
-  </button>
-</div>
+<div class="print-btn-wrap no-print"><button class="print-btn" onclick="window.print()">列印 / 儲存為 PDF</button></div>
 
 </body>
 </html>
